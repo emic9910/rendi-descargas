@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rendi · Punto de venta para tu negocio</title>
+<meta name="description" content="Rendi: punto de venta para abarrotes, refaccionarias, ferreterías y papelerías. Cobra, controla tu inventario y cuadra tu caja, aunque se vaya el internet. Pruébalo 30 días gratis.">
+<meta name="theme-color" content="#143d1f">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23143d1f'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-family='Arial Black,Arial' font-weight='900' font-size='38' fill='%23a3e66a'%3Er%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- Página pública de descarga (Paso 2.7). La sirve el servidor de licencias en "/"; el panel vive en "/panel".
+     Para cambiar el enlace de descarga o el WhatsApp, edita CONFIG al final de este archivo.
+     Dirección visual (23 oct 2026): base Wise (bosque + lima, pastillas, display pesado), lienzo cálido y tarjetas planas
+     de "AI for Business", líneas punteadas y un solo acento de ORYZO. Sin sombras ni degradados. -->
+<style>
+  :root {
+    --bosque: #143d1f;        /* superficie oscura y texto de marca */
+    --bosque-2: #0e2c16;
+    --lima: #a3e66a;          /* SOLO como relleno (con texto oscuro) o como texto sobre bosque */
+    --lima-suave: #e6f5d6;
+    --tinta: #0e110f;         /* titulares */
+    --texto: #3d423e;         /* cuerpo */
+    --gris: #6a6f6b;
+    --linea: #c8cbc3;
+    --lienzo: #ecebe5;        /* fondo de página, cálido */
+    --papel: #ffffff;
+    --marcador: #fff100;      /* resaltador del aviso de Windows */
+    --display: "Inter", "Segoe UI", system-ui, sans-serif;
+    --mono: "JetBrains Mono", Consolas, ui-monospace, monospace;
+    --ancho: 1200px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--lienzo); color: var(--texto); font: 400 18px/1.5 var(--display); letter-spacing: -0.007em; font-feature-settings: "calt"; }
+  img, svg { display: block; }
+  a { color: inherit; }
+  .contenedor { max-width: var(--ancho); margin: 0 auto; padding: 0 24px; }
+  ::selection { background: var(--lima); color: var(--tinta); }
+  :focus-visible { outline: 3px solid var(--bosque); outline-offset: 3px; border-radius: 6px; }
+
+  /* ---------- tipografía ---------- */
+  .display { font-weight: 900; text-transform: uppercase; color: var(--tinta); letter-spacing: -0.045em; line-height: .86; margin: 0; }
+  h2.display { font-size: clamp(40px, 6.2vw, 84px); }
+  .etiqueta { display: inline-flex; align-items: center; gap: 8px; font: 500 13px/1 var(--mono); letter-spacing: 0; text-transform: uppercase; color: var(--bosque); background: var(--lima-suave); padding: 9px 14px; border-radius: 999px; }
+  .etiqueta i { width: 7px; height: 7px; border-radius: 50%; background: var(--bosque); }
+  .bajada { font-size: 20px; line-height: 1.45; color: var(--texto); max-width: 34em; margin: 20px 0 0; }
+
+  /* ---------- botones ---------- */
+  .boton { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 26px; border-radius: 999px; font: 600 17px/1 var(--display); text-decoration: none; cursor: pointer; border: 0;
+    transition: transform .16s cubic-bezier(.2, .8, .2, 1), background-color .16s ease, color .16s ease; }
+  .boton:active { transform: scale(.97); }
+  .boton.lima { background: var(--lima); color: var(--tinta); }
+  .boton.lima:hover { background: #b4ef80; }
+  .boton.bosque { background: var(--bosque); color: var(--papel); }
+  .boton.bosque:hover { background: var(--bosque-2); }
+  .boton.contorno { background: transparent; color: var(--bosque); box-shadow: inset 0 0 0 1.5px var(--bosque); }
+  .boton.contorno:hover { background: var(--lima-suave); }
+  .boton.chico { min-height: 42px; padding: 0 18px; font-size: 15px; }
+  .boton svg { width: 20px; height: 20px; flex: none; }
+  .enlace { font-weight: 600; color: var(--bosque); text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1.5px; }
+  .enlace:hover { text-decoration-thickness: 3px; }
+
+  /* ---------- encabezado ---------- */
+  header { position: sticky; top: 0; z-index: 10; padding: 14px 0; background: color-mix(in srgb, var(--lienzo) 88%, transparent); backdrop-filter: blur(10px); }
+  header .contenedor { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .marca { display: inline-flex; align-items: baseline; gap: 2px; font: 900 30px/1 var(--display); letter-spacing: -0.06em; color: var(--tinta); text-decoration: none; }
+  .marca b { width: 9px; height: 9px; border-radius: 2px; background: var(--lima); box-shadow: inset 0 0 0 2px var(--bosque); }
+  .menu { display: flex; gap: 4px; background: var(--papel); border-radius: 999px; padding: 6px; }
+  .menu a { text-decoration: none; font-size: 15px; font-weight: 500; color: var(--texto); padding: 9px 16px; border-radius: 999px; transition: background-color .16s ease; }
+  .menu a:hover { background: var(--lienzo); color: var(--tinta); }
+
+  /* ---------- portada ---------- */
+  .portada { padding: 48px 0 72px; }
+  .portada .contenedor { display: grid; grid-template-columns: 1.15fr .85fr; gap: 48px; align-items: center; }
+  .portada h1 { font-size: clamp(56px, 9vw, 128px); margin-top: 22px; }
+  .portada h1 span { display: block; }
+  .portada h1 .marcado { position: relative; display: inline-block; z-index: 0; }
+  .portada h1 .marcado::after { content: ""; position: absolute; left: -2%; right: -2%; bottom: .06em; height: .32em; background: var(--lima); z-index: -1; border-radius: 4px; }
+  .acciones { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: 32px; }
+  .letra-chica { font: 400 13px/1.6 var(--mono); color: var(--gris); margin-top: 18px; letter-spacing: 0; }
+  .solo-celular { display: none; }
+
+  /* tarjeta oscura con el ticket adentro */
+  .vitrina { background: var(--bosque); border-radius: 28px; padding: 28px; color: var(--papel); }
+  .vitrina-arriba { display: flex; justify-content: space-between; align-items: center; font: 500 12px/1 var(--mono); text-transform: uppercase; color: var(--lima); margin-bottom: 18px; letter-spacing: 0; }
+  .vitrina-arriba span:last-child { color: rgba(255, 255, 255, .6); }
+  .ticket { background: var(--papel); color: var(--tinta); border-radius: 12px; padding: 22px 22px 18px; font: 400 15px/1.7 var(--mono); letter-spacing: 0; }
+  .ticket .t { text-align: center; font-weight: 500; }
+  .ticket .r { display: flex; justify-content: space-between; gap: 12px; }
+  .ticket .g { color: var(--gris); }
+  .ticket hr { border: 0; border-top: 1.5px dashed var(--linea); margin: 10px 0; }
+  .ticket .total { font-weight: 500; font-size: 19px; }
+  .vitrina-abajo { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; align-content: flex-start; min-height: 37px; }
+  .ficha { display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, .08); border-radius: 999px; padding: 9px 14px; font-size: 14px; font-weight: 500; }
+  .ficha.lima { background: var(--lima); color: var(--tinta); }
+  /* el ticket que cambia de giro */
+  .ticket-contenido, .vitrina-abajo, #v-giro { transition: opacity .28s ease, transform .28s cubic-bezier(.2, .8, .2, 1); }
+  .cambiando .ticket-contenido, .cambiando .vitrina-abajo, .cambiando #v-giro { opacity: 0; transform: translateY(10px); }
+  .puntitos { display: flex; gap: 8px; margin-top: 18px; }
+  .puntitos button { flex: 1; height: 6px; border: 0; padding: 0; border-radius: 999px; background: rgba(255, 255, 255, .18); cursor: pointer; overflow: hidden; position: relative; }
+  .puntitos button::after { content: ""; position: absolute; inset: 0; background: var(--lima); transform: scaleX(0); transform-origin: left; }
+  .puntitos button.listo::after { transform: scaleX(1); }
+  .puntitos button.activo::after { animation: avanza var(--duracion, 4s) linear forwards; }
+  .vitrina.pausada .puntitos button.activo::after { animation-play-state: paused; }
+  @keyframes avanza { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  .giros span { transition: color .25s ease; }
+  .giros span.activo { color: var(--tinta); font-weight: 700; }
+  .giros span.activo::before { content: "● "; color: var(--bosque); }
+
+  /* ---------- franja de giros ---------- */
+  .giros { border-top: 1.5px dashed var(--linea); border-bottom: 1.5px dashed var(--linea); padding: 18px 0; }
+  .giros .contenedor { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; font: 500 14px/1 var(--mono); text-transform: uppercase; color: var(--gris); letter-spacing: 0; }
+
+  /* ---------- secciones ---------- */
+  section { padding: 104px 0; }
+  .cabeza { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; margin-bottom: 48px; flex-wrap: wrap; }
+  .cabeza p { max-width: 26em; margin: 0; color: var(--texto); font-size: 19px; }
+
+  .funciones { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .funcion { background: var(--papel); border-radius: 24px; padding: 28px; }
+  .funcion .icono { width: 48px; height: 48px; border-radius: 14px; background: var(--lima-suave); color: var(--bosque); display: grid; place-items: center; margin-bottom: 22px; }
+  .funcion .icono svg { width: 24px; height: 24px; }
+  .funcion h3 { margin: 0 0 8px; font-size: 21px; font-weight: 700; color: var(--tinta); letter-spacing: -0.02em; }
+  .funcion p { margin: 0; font-size: 16.5px; color: var(--texto); }
+
+  /* ---------- torres de cubos ---------- */
+  .torres { padding-top: 0; }
+  .escenas { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .escena { margin: 0; border-radius: 24px; padding: 24px 24px 22px; display: flex; flex-direction: column; }
+  .escena.ciega { background: var(--papel); }
+  .escena.rendi { background: var(--bosque); }
+  .escena svg { width: 100%; height: auto; margin: 8px 0 4px; overflow: visible; }
+  .escena .pie-escena { margin: 0; font-size: 17px; }
+  .escena.rendi .pie-escena { color: rgba(255, 255, 255, .85); }
+  .escena.rendi .etiqueta { background: var(--lima); color: var(--tinta); }
+  .escena.rendi .etiqueta i { background: var(--tinta); }
+  .etiqueta.gris { background: var(--lienzo); color: var(--gris); }
+  .etiqueta.gris i { background: var(--gris); }
+  .otra-vez { margin-top: 18px; }
+  .piso { stroke: var(--linea); stroke-width: 1.5; stroke-dasharray: 5 6; }
+  .rendi .piso { stroke: rgba(255, 255, 255, .25); }
+  .dia { font: 500 13px var(--mono); fill: rgba(255, 255, 255, .6); text-anchor: middle; }
+  /* cada cubo cae a su lugar (--d: cuándo) */
+  .cubo { opacity: 0; transform-box: fill-box; transform-origin: center; }
+  .escena.arma .cubo { animation: llega .55s cubic-bezier(.3, 1.35, .5, 1) var(--d) forwards; }
+  @keyframes llega { from { opacity: 0; transform: translateY(-150px); } 40% { opacity: 1; } to { opacity: 1; transform: none; } }
+  /* a ciegas: se tambalea y se cae (--cx, --cy, --cr: a dónde va a dar cada cubo) */
+  .torre-ciega { transform-box: fill-box; transform-origin: 30% 100%; }
+  .escena.tambalea .torre-ciega { animation: tambalea 1s ease-in-out forwards; }
+  @keyframes tambalea { 0% { transform: rotate(0); } 25% { transform: rotate(-2deg); } 50% { transform: rotate(3deg); } 75% { transform: rotate(-3deg); } 100% { transform: rotate(7deg); } }
+  .escena.cae .cubo { animation: derrumbe .85s cubic-bezier(.55, 0, .8, .4) var(--dc) forwards; opacity: 1; }
+  @keyframes derrumbe { from { opacity: 1; transform: none; } to { opacity: 1; transform: translate(var(--cx), var(--cy)) rotate(var(--cr)); } }
+  .pregunta, .mejor { opacity: 0; transform: translateY(8px); transition: opacity .4s ease, transform .4s cubic-bezier(.2, .8, .2, 1); }
+  .escena.final .pregunta, .escena.final .mejor { opacity: 1; transform: none; }
+  .pregunta text { font: 900 22px var(--display); letter-spacing: -0.03em; fill: var(--tinta); text-transform: uppercase; }
+  .mejor text { font: 700 13px var(--mono); fill: var(--tinta); }
+  /* sin animación (si el sistema lo pide): se ve el final de una vez */
+  @media (prefers-reduced-motion: reduce) {
+    .cubo { opacity: 1; }
+    .escena.ciega .cubo { transform: translate(var(--cx), var(--cy)) rotate(var(--cr)); }
+    .pregunta, .mejor { opacity: 1; transform: none; }
+    .otra-vez { display: none; }
+  }
+
+  /* ---------- pasos (bosque) ---------- */
+  .oscura { background: var(--bosque); color: var(--papel); }
+  .oscura .display { color: var(--lima); }
+  .oscura .cabeza p { color: rgba(255, 255, 255, .78); }
+  .pasos { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1.5px dashed rgba(255, 255, 255, .25); }
+  .paso { padding: 32px 28px 8px 0; display: flex; flex-direction: column; }
+  .paso + .paso { padding-left: 28px; border-left: 1.5px dashed rgba(255, 255, 255, .25); }
+  .paso .num { font: 500 15px/1 var(--mono); color: var(--lima); letter-spacing: 0; }
+  .paso h3 { margin: 18px 0 10px; font-size: 30px; font-weight: 900; letter-spacing: -0.035em; line-height: 1; text-transform: uppercase; }
+  .paso p { margin: 0 0 24px; color: rgba(255, 255, 255, .8); font-size: 17px; }
+  .paso .boton { margin-top: auto; align-self: flex-start; }
+
+  /* ---------- aviso de Windows ---------- */
+  .windows { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .captura { background: var(--papel); border-radius: 24px; padding: 16px; }
+  .smartscreen { background: #0b5cad; color: #fff; border-radius: 10px; padding: 24px 24px 18px; min-height: 238px; display: flex; flex-direction: column; font-family: "Segoe UI", system-ui, sans-serif; letter-spacing: 0; }
+  .smartscreen .titulo { font-size: 23px; font-weight: 300; margin: 0 0 12px; }
+  .smartscreen p { margin: 0 0 10px; font-size: 13.5px; line-height: 1.45; opacity: .95; }
+  .smartscreen .vinculo { font-size: 13.5px; text-decoration: underline; align-self: flex-start; }
+  .smartscreen .botones { margin-top: auto; display: flex; justify-content: flex-end; gap: 8px; }
+  .smartscreen .btn-w { border: 2px solid rgba(255, 255, 255, .85); padding: 6px 16px; font-size: 13.5px; }
+  .marcar { outline: 3px solid var(--marcador); outline-offset: 4px; border-radius: 2px; }
+  .captura .pie { display: flex; gap: 14px; align-items: baseline; padding: 18px 8px 6px; font-size: 18px; color: var(--tinta); }
+  .captura .pie span { font: 500 14px/1 var(--mono); color: var(--bosque); background: var(--lima-suave); padding: 7px 10px; border-radius: 999px; letter-spacing: 0; }
+  .seguro { margin-top: 16px; display: flex; gap: 14px; align-items: center; background: var(--papel); border-radius: 24px; padding: 20px 24px; font-size: 17px; }
+  .seguro svg { width: 28px; height: 28px; color: var(--bosque); flex: none; }
+
+  /* ---------- asesoría ---------- */
+  .domo { background: var(--tinta); color: var(--papel); border-radius: 64px 64px 0 0; padding: 88px 0 96px; }
+  .domo .rejilla { display: grid; grid-template-columns: 1.2fr .8fr; gap: 48px; align-items: center; }
+  .domo .display { color: var(--papel); font-size: clamp(40px, 5.6vw, 76px); }
+  .domo .display em { font-style: normal; color: var(--lima); }
+  .domo .bajada { color: rgba(255, 255, 255, .78); }
+  .puntos { list-style: none; padding: 0; margin: 28px 0 0; border-top: 1.5px dashed rgba(255, 255, 255, .22); }
+  .puntos li { display: flex; gap: 14px; padding: 16px 0; border-bottom: 1.5px dashed rgba(255, 255, 255, .22); font-size: 17.5px; color: rgba(255, 255, 255, .9); }
+  .puntos li::before { content: ""; flex: none; width: 22px; height: 22px; margin-top: 2px; border-radius: 50%; background: var(--lima) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230e110f' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E") center/14px no-repeat; }
+  .precio { background: var(--papel); color: var(--tinta); border-radius: 28px; padding: 32px; }
+  .precio .etiqueta { margin-bottom: 18px; }
+  .precio h3 { margin: 0 0 10px; font-size: 34px; font-weight: 900; letter-spacing: -0.04em; line-height: 1; text-transform: uppercase; }
+  .precio p { margin: 0 0 24px; color: var(--texto); font-size: 17px; }
+  .precio .boton { width: 100%; }
+
+  /* ---------- preguntas ---------- */
+  .preguntas { display: grid; grid-template-columns: .8fr 1.2fr; gap: 48px; align-items: start; }
+  .lista-preguntas { border-top: 1.5px dashed var(--linea); }
+  details { border-bottom: 1.5px dashed var(--linea); }
+  summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 22px 0; font-size: 20px; font-weight: 700; color: var(--tinta); letter-spacing: -0.02em; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: ""; flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--papel) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23143d1f' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M12 6v12M6 12h12'/%3E%3C/svg%3E") center/16px no-repeat; transition: transform .2s cubic-bezier(.2, .8, .2, 1); }
+  details[open] summary::after { transform: rotate(45deg); background-color: var(--lima); }
+  details p { margin: 0 0 24px; max-width: 40em; color: var(--texto); font-size: 17.5px; }
+
+  /* ---------- pie ---------- */
+  footer { background: var(--bosque); color: rgba(255, 255, 255, .75); padding: 72px 0 32px; overflow: hidden; }
+  .cierre { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap; }
+  .cierre h2 { color: var(--papel); font-size: clamp(36px, 5vw, 64px); max-width: 11em; }
+  .gigante { font: 900 clamp(120px, 26vw, 380px)/.78 var(--display); letter-spacing: -0.075em; color: var(--lima); margin: 64px 0 0 -0.04em; user-select: none; }
+  .pie-final { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 28px; padding-top: 20px; border-top: 1.5px dashed rgba(255, 255, 255, .22); font: 400 13px/1.6 var(--mono); letter-spacing: 0; }
+  .pie-final a { color: var(--lima); }
+
+  /* ---------- celular ---------- */
+  @media (max-width: 900px) {
+    .menu { display: none; }
+    .portada { padding: 24px 0 56px; }
+    .portada .contenedor, .domo .rejilla, .preguntas, .windows, .escenas { grid-template-columns: 1fr; }
+    .funciones { grid-template-columns: 1fr; }
+    .pasos { grid-template-columns: 1fr; }
+    .paso, .paso + .paso { padding: 28px 0; border-left: 0; }
+    .paso + .paso { border-top: 1.5px dashed rgba(255, 255, 255, .25); }
+    section { padding: 72px 0; }
+    .domo { border-radius: 40px 40px 0 0; padding: 64px 0 72px; }
+    .cabeza { margin-bottom: 32px; }
+    .bajada { font-size: 18px; }
+  }
+  @media (max-width: 520px) {
+    .contenedor { padding: 0 16px; }
+    .acciones .boton { width: 100%; }
+    .giros .contenedor { justify-content: flex-start; }
+    .vitrina { padding: 18px; border-radius: 22px; }
+    .vitrina-abajo { min-height: 84px; } /* dos filas de fichas: la tarjeta no cambia de alto al rotar */
+  }
+  @media (max-width: 900px) and (pointer: coarse) { .solo-celular { display: block; } }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="contenedor">
+    <a class="marca" href="#" aria-label="Rendi, inicio">rendi<b></b></a>
+    <nav class="menu" aria-label="Secciones">
+      <a href="#que-hace">Qué hace</a>
+      <a href="#empezar">Cómo empezar</a>
+      <a href="#asesoria">Asesoría</a>
+      <a href="#preguntas">Preguntas</a>
+    </nav>
+    <a class="boton bosque chico" data-whatsapp="codigo" href="#">Pide tu código</a>
+  </div>
+</header>
+
+<main>
+  <div class="portada">
+    <div class="contenedor">
+      <div>
+        <span class="etiqueta"><i></i>Punto de venta · 30 días gratis</span>
+        <h1 class="display"><span>Que tu</span><span>negocio</span><span class="marcado">rinda.</span></h1>
+        <p class="bajada">Cobra rápido, cuida tu inventario y cuadra tu caja todos los días. Funciona en tu computadora, aunque se vaya el internet.</p>
+        <div class="acciones">
+          <a class="boton lima" data-descarga href="#">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg>
+            Descargar para Windows</a>
+          <a class="enlace" data-whatsapp="codigo" href="#">o pide tu código gratis por WhatsApp</a>
+        </div>
+        <p class="letra-chica">Sin tarjeta · Windows 10 u 11 · Tus datos se quedan en tu computadora</p>
+        <p class="letra-chica solo-celular">Estás en el celular: Rendi se instala en una computadora con Windows. Desde aquí puedes pedir tu código.</p>
+      </div>
+
+      <!-- El ticket va cambiando de giro (ver EJEMPLOS en el script). Lo de aquí es el primero, por si no corre JavaScript. -->
+      <div class="vitrina" id="vitrina">
+        <div class="vitrina-arriba" aria-hidden="true"><span id="v-giro">● Abarrotes</span><span id="v-hora">Mar 10:42</span></div>
+        <div class="ticket" aria-hidden="true">
+          <div class="ticket-contenido" id="v-ticket">
+            <div class="t">ABARROTES LUPE</div>
+            <div class="r g"><span>Ticket #128</span><span>Atendió: Ana</span></div>
+            <hr>
+            <div class="r"><span>2 Refresco 600 ml</span><span>$36.00</span></div>
+            <div class="r"><span>1 Frijol 1 kg</span><span>$42.00</span></div>
+            <div class="r"><span>0.750 kg Jamón</span><span>$97.50</span></div>
+            <hr>
+            <div class="r total"><span>TOTAL</span><span>$175.50</span></div>
+            <div class="r g"><span>Efectivo</span><span>$200.00</span></div>
+            <div class="r g"><span>Cambio</span><span>$24.50</span></div>
+          </div>
+        </div>
+        <div class="vitrina-abajo" aria-hidden="true" id="v-fichas">
+          <span class="ficha lima">✓ Caja cuadrada</span>
+          <span class="ficha">Frijol: quedan 4</span>
+        </div>
+        <div class="puntitos" id="v-puntitos" role="group" aria-label="Ver ticket de otro giro"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="giros">
+    <div class="contenedor"><span data-giro="abarrotes">Abarrotes</span><span data-giro="refaccionaria">Refaccionarias</span><span data-giro="ferreteria">Ferreterías</span><span data-giro="papeleria">Papelerías</span><span>Misceláneas</span></div>
+  </div>
+
+  <section id="que-hace">
+    <div class="contenedor">
+      <div class="cabeza">
+        <h2 class="display">Todo tu<br>mostrador.</h2>
+        <p>Sencillo para tus cajeros y claro para ti. Hecho para el negocio de todos los días.</p>
+      </div>
+      <div class="funciones">
+        <div class="funcion">
+          <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></div>
+          <h3>Cobra rápido</h3>
+          <p>Con lector de código de barras o buscando por nombre. Granel por kilo o litro. Efectivo, tarjeta y transferencia.</p>
+        </div>
+        <div class="funcion">
+          <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5 12 12l9-4.5M12 12v9"/></svg></div>
+          <h3>Inventario al día</h3>
+          <p>Cada venta descuenta sola. Te avisa qué se está acabando y te arma el pedido por proveedor en Excel.</p>
+        </div>
+        <div class="funcion">
+          <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 9.5v5M18 9.5v5"/></svg></div>
+          <h3>Caja que cuadra</h3>
+          <p>Abre con tu fondo y cuenta billetes al cerrar: ves si sobró o faltó. Gastos y retiros quedan anotados.</p>
+        </div>
+        <div class="funcion">
+          <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></div>
+          <h3>Tú tienes el control</h3>
+          <p>Cada cajero entra con su PIN. Devoluciones, descuentos y cambios de precio llevan tu autorización, y queda quién hizo qué.</p>
+        </div>
+        <div class="funcion">
+          <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.3"/></svg></div>
+          <h3>Precios de mayoreo</h3>
+          <p>Precio especial por cantidad o para tus clientes de mayoreo. Te avisa si vas a vender abajo del costo.</p>
+        </div>
+        <div class="funcion">
+          <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.5 3.2 8.3 7.5 9.5 4.3-1.2 7.5-5 7.5-9.5V6z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg></div>
+          <h3>Tus datos son tuyos</h3>
+          <p>Se guardan en tu computadora, con copia de seguridad automática cada día. Descárgalos en Excel cuando quieras.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Torres de cubos: a ciegas se cae; con Rendi se construye derecho (ver "Torres" en el script) -->
+  <section class="torres" id="torres">
+    <div class="contenedor">
+      <div class="cabeza">
+        <h2 class="display">Sin números,<br>construyes<br>a ciegas.</h2>
+        <p>¿Cuánto vendiste ayer? ¿Cuánto le ganas de verdad? Si no lo sabes, tu negocio se tambalea aunque trabajes todo el día.</p>
+      </div>
+      <div class="escenas">
+        <figure class="escena ciega" id="escena-ciega">
+          <figcaption><span class="etiqueta gris"><i></i>A ciegas</span></figcaption>
+          <svg viewBox="0 0 480 330" role="img" aria-label="Una torre de cubos chueca que se tambalea y se cae"></svg>
+          <p class="pie-escena">Compras de más, no sabes qué se vende y al final del mes no sabes si ganaste o perdiste.</p>
+        </figure>
+        <figure class="escena rendi" id="escena-rendi">
+          <figcaption><span class="etiqueta"><i></i>Con Rendi</span></figcaption>
+          <svg viewBox="0 0 480 330" role="img" aria-label="Siete torres de cubos, de lunes a domingo, que se construyen derechas; la del sábado es la más alta"></svg>
+          <p class="pie-escena">Ves cuánto vendes cada día, qué se vende más, cuánto le ganas y cuándo resurtir.</p>
+        </figure>
+      </div>
+      <button type="button" class="boton contorno chico otra-vez" id="torres-otra-vez">↻ Ver otra vez</button>
+    </div>
+  </section>
+
+  <section class="oscura" id="empezar">
+    <div class="contenedor">
+      <div class="cabeza">
+        <h2 class="display">Empieza<br>hoy.</h2>
+        <p>Se instala en unos minutos. Si te atoras, te ayudamos por WhatsApp.</p>
+      </div>
+      <div class="pasos">
+        <div class="paso">
+          <span class="num">01</span>
+          <h3>Descarga Rendi</h3>
+          <p>En una computadora con Windows 10 u 11.</p>
+          <a class="boton lima chico" data-descarga href="#">Descargar</a>
+        </div>
+        <div class="paso">
+          <span class="num">02</span>
+          <h3>Pide tu código</h3>
+          <p>Escríbenos por WhatsApp con el nombre de tu negocio y te mandamos tu código de activación.</p>
+          <a class="boton lima chico" data-whatsapp="codigo" href="#">Pedir código</a>
+        </div>
+        <div class="paso">
+          <span class="num">03</span>
+          <h3>Actívalo y vende</h3>
+          <p>Escribe el código al abrir Rendi y úsalo <b>30 días gratis</b> con tu negocio de verdad.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="windows">
+    <div class="contenedor">
+      <div class="cabeza">
+        <h2 class="display">¿Salió un<br>aviso azul?</h2>
+        <p>Es normal. Windows lo muestra con programas nuevos que todavía no conoce. Se pasa en dos toques:</p>
+      </div>
+      <div class="windows">
+        <div class="captura">
+          <div class="smartscreen" aria-hidden="true">
+            <div class="titulo">Windows protegió su PC</div>
+            <p>Microsoft Defender SmartScreen impidió el inicio de una aplicación no reconocida. Si ejecuta esta aplicación, puede poner en riesgo su PC.</p>
+            <span class="vinculo marcar">Más información</span>
+            <div class="botones"><span class="btn-w">No ejecutar</span></div>
+          </div>
+          <div class="pie"><span>Paso 1</span>Toca <b>"Más información"</b></div>
+        </div>
+        <div class="captura">
+          <div class="smartscreen" aria-hidden="true">
+            <div class="titulo">Windows protegió su PC</div>
+            <p>Microsoft Defender SmartScreen impidió el inicio de una aplicación no reconocida. Si ejecuta esta aplicación, puede poner en riesgo su PC.</p>
+            <p>Aplicación: Rendi-Instalador.exe<br>Editor: Editor desconocido</p>
+            <div class="botones"><span class="btn-w marcar">Ejecutar de todas formas</span><span class="btn-w">No ejecutar</span></div>
+          </div>
+          <div class="pie"><span>Paso 2</span>Toca <b>"Ejecutar de todas formas"</b></div>
+        </div>
+      </div>
+      <div class="seguro">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.5 3.2 8.3 7.5 9.5 4.3-1.2 7.5-5 7.5-9.5V6z"/></svg>
+        <span>Descarga Rendi <b>solo desde esta página</b>. Si tienes dudas antes de instalar, <a class="enlace" data-whatsapp="info" href="#">escríbenos</a> y te guiamos.</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="domo" id="asesoria">
+    <div class="contenedor rejilla">
+      <div>
+        <span class="etiqueta">Opcional · Asesoría financiera</span>
+        <h2 class="display" style="margin-top:22px">¿Sabes cuánto te <em>queda</em> de verdad?</h2>
+        <p class="bajada">Además del punto de venta, te ofrecemos una asesoría mensual con tus propios números:</p>
+        <ul class="puntos">
+          <li>Tu estado de resultados del mes: cuánto vendiste, cuánto te costó y cuánto ganaste de verdad.</li>
+          <li>Qué productos te dejan más y cuáles se están comiendo tu margen.</li>
+          <li>Una persona te lo explica en 15 minutos, en palabras claras.</li>
+        </ul>
+      </div>
+      <div class="precio">
+        <span class="etiqueta">Precio</span>
+        <h3>¿Cuánto cuesta?</h3>
+        <p>Depende de tu negocio y de lo que necesites. Escríbenos y te decimos el plan que te conviene.</p>
+        <a class="boton lima" data-whatsapp="precio" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4.1A8 8 0 1 1 20 11.5z"/></svg>
+          Pregunta por WhatsApp</a>
+      </div>
+    </div>
+  </div>
+
+  <section id="preguntas">
+    <div class="contenedor preguntas">
+      <h2 class="display">Preguntas<br>frecuentes.</h2>
+      <div class="lista-preguntas">
+        <details><summary>¿Necesito internet?</summary><p>Solo para activarlo la primera vez. Después vende aunque se vaya el internet. Cuando vuelve, se conecta solo para revisar tu licencia.</p></details>
+        <details><summary>¿En qué computadora funciona?</summary><p>En computadoras con Windows 10 u 11. Puedes cobrar con lector de código de barras e imprimir tus tickets.</p></details>
+        <details><summary>¿Dónde quedan mis datos?</summary><p>En tu propia computadora. Rendi saca una copia de seguridad cada día y puedes guardarla en una USB o descargar tus ventas en Excel cuando quieras.</p></details>
+        <details><summary>¿Puedo tener varios cajeros?</summary><p>Sí. Cada uno entra con su PIN. Al cerrar la caja, el cajero cuenta el dinero sin ver cuánto debería haber, y tú ves si sobró o faltó.</p></details>
+        <details><summary>¿Qué pasa al terminar los 30 días?</summary><p>Si te gustó, contratas tu mensualidad por WhatsApp y sigues usándolo con todos tus datos. Tus datos son tuyos: siempre los puedes descargar.</p></details>
+        <details><summary>¿Y si cambio de computadora?</summary><p>Instalas Rendi en la nueva, pasas tu copia de seguridad y escribes el mismo código. No pierdes nada.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="contenedor">
+    <div class="cierre">
+      <h2 class="display">Pruébalo 30 días. Sin tarjeta.</h2>
+      <div class="acciones" style="margin-top:0">
+        <a class="boton lima" data-descarga href="#">Descargar para Windows</a>
+        <a class="boton contorno" style="color:#fff;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.6)" data-whatsapp="info" href="#">WhatsApp</a>
+      </div>
+    </div>
+    <div class="gigante" aria-hidden="true">rendi</div>
+    <div class="pie-final">
+      <span>© <span id="anio"></span> Rendi · Punto de venta para negocios de México</span>
+      <a data-whatsapp="info" href="#">WhatsApp <span id="numero"></span></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+'use strict';
+// ---------- Lo que se cambia aquí ----------
+const CONFIG = {
+  // Enlace al instalador (GitHub Releases). Mientras sea null, el botón de descarga manda a pedirlo por WhatsApp.
+  // "latest/download/Rendi-Instalador.exe" siempre da la versión más nueva: el enlace no cambia al subir otra.
+  descarga: 'https://github.com/emic9910/rendi-descargas/releases/latest/download/Rendi-Instalador.exe',
+  whatsapp: '7352355970',
+};
+const MENSAJES = {
+  info: 'Hola, quiero información de Rendi, el punto de venta.',
+  codigo: 'Hola, quiero probar Rendi 30 días gratis. Mi negocio se llama: ',
+  precio: 'Hola, quiero saber el precio de Rendi para mi negocio. Es un/una: ',
+  descarga: 'Hola, quiero descargar Rendi. ¿Me pasas el enlace?',
+};
+const enlaceWhatsApp = (tipo) => `https://wa.me/52${CONFIG.whatsapp}?text=${encodeURIComponent(MENSAJES[tipo] ?? MENSAJES.info)}`;
+const nuevaPestana = (a) => { a.target = '_blank'; a.rel = 'noopener'; };
+document.querySelectorAll('[data-whatsapp]').forEach((a) => { a.href = enlaceWhatsApp(a.dataset.whatsapp); nuevaPestana(a); });
+document.querySelectorAll('[data-descarga]').forEach((a) => {
+  if (CONFIG.descarga) { a.href = CONFIG.descarga; return; }
+  a.href = enlaceWhatsApp('descarga');
+  nuevaPestana(a);
+});
+document.getElementById('anio').textContent = new Date().getFullYear();
+
+// ---------- El ticket de la portada va cambiando de giro ----------
+// Mismo número de renglones en todos, para que la tarjeta no brinque de tamaño.
+const EJEMPLOS = [
+  { giro: 'abarrotes', nombre: 'Abarrotes', tienda: 'ABARROTES LUPE', hora: 'Mar 10:42', folio: 128, atendio: 'Ana',
+    renglones: [['2 Refresco 600 ml', '$36.00'], ['1 Frijol 1 kg', '$42.00'], ['0.750 kg Jamón', '$97.50']],
+    total: '$175.50', pago: [['Efectivo', '$200.00'], ['Cambio', '$24.50']],
+    fichas: ['✓ Caja cuadrada', 'Frijol: quedan 4'] },
+  { giro: 'refaccionaria', nombre: 'Refaccionaria', tienda: 'REFACCIONARIA EL PISTÓN', hora: 'Mié 12:15', folio: 342, atendio: 'Beto',
+    renglones: [['1 Balata delantera', '$385.00'], ['4 Bujía de cobre', '$240.00'], ['1 Aceite 20W-50 4 L', '$420.00']],
+    total: '$1,045.00', pago: [['Tarjeta', '$1,045.00'], ['Precio de mayoreo', '✓']],
+    fichas: ['✓ Mayoreo aplicado', 'Balatas: quedan 2'] },
+  { giro: 'ferreteria', nombre: 'Ferretería', tienda: 'FERRETERÍA DON CHUY', hora: 'Jue 09:30', folio: 517, atendio: 'Chuy',
+    renglones: [['1 Martillo 16 oz', '$185.00'], ['50 Tornillo 1 pulg.', '$45.00'], ['2 Cinta de aislar', '$36.00']],
+    total: '$266.00', pago: [['Transferencia', '$266.00'], ['Referencia', '004512']],
+    fichas: ['✓ Pedido al proveedor listo', 'Martillo: queda 1'] },
+  { giro: 'papeleria', nombre: 'Papelería', tienda: 'PAPELERÍA LA PLUMA', hora: 'Vie 16:05', folio: 89, atendio: 'Sofi',
+    renglones: [['3 Cuaderno profes.', '$105.00'], ['1 Juego de geometría', '$48.00'], ['10 Copias', '$10.00']],
+    total: '$163.00', pago: [['Efectivo', '$200.00'], ['Cambio', '$37.00']],
+    fichas: ['✓ Caja cuadrada', 'Cuadernos: quedan 6'] },
+];
+const SEGUNDOS = 4;
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+const vitrina = document.getElementById('vitrina');
+const puntitos = document.getElementById('v-puntitos');
+const sinMovimiento = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let actual = 0, temporizador = null;
+
+function pintarEjemplo(i) {
+  const e = EJEMPLOS[i];
+  const renglon = ([a, b], clase = '') => `<div class="r ${clase}"><span>${esc(a)}</span><span>${esc(b)}</span></div>`;
+  document.getElementById('v-giro').textContent = `● ${e.nombre}`;
+  document.getElementById('v-hora').textContent = e.hora;
+  document.getElementById('v-ticket').innerHTML = `<div class="t">${esc(e.tienda)}</div>`
+    + renglon([`Ticket #${e.folio}`, `Atendió: ${e.atendio}`], 'g') + '<hr>'
+    + e.renglones.map((r) => renglon(r)).join('') + '<hr>'
+    + renglon(['TOTAL', e.total], 'total') + e.pago.map((r) => renglon(r, 'g')).join('');
+  document.getElementById('v-fichas').innerHTML = e.fichas.map((f, n) => `<span class="ficha${n === 0 ? ' lima' : ''}">${esc(f)}</span>`).join('');
+  document.querySelectorAll('.giros [data-giro]').forEach((s) => s.classList.toggle('activo', s.dataset.giro === e.giro));
+  puntitos.querySelectorAll('button').forEach((b, n) => {
+    b.classList.remove('activo', 'listo');
+    void b.offsetWidth; // reinicia la barrita
+    if (n < i) b.classList.add('listo');
+    if (n === i && !sinMovimiento) b.classList.add('activo');
+    if (n === i && sinMovimiento) b.classList.add('listo');
+    b.setAttribute('aria-pressed', n === i);
+  });
+}
+
+function irA(i) {
+  actual = (i + EJEMPLOS.length) % EJEMPLOS.length;
+  vitrina.classList.add('cambiando');
+  setTimeout(() => { pintarEjemplo(actual); vitrina.classList.remove('cambiando'); }, 280);
+  programar();
+}
+function programar() {
+  clearTimeout(temporizador);
+  if (sinMovimiento || vitrina.classList.contains('pausada')) return;
+  temporizador = setTimeout(() => irA(actual + 1), SEGUNDOS * 1000 + 280);
+}
+
+vitrina.style.setProperty('--duracion', `${SEGUNDOS}s`);
+puntitos.innerHTML = EJEMPLOS.map((e, n) => `<button type="button" aria-label="Ticket de ${esc(e.nombre.toLowerCase())}" data-n="${n}"></button>`).join('');
+puntitos.addEventListener('click', (ev) => { const b = ev.target.closest('button'); if (b) irA(Number(b.dataset.n)); });
+// Se pausa mientras el mouse está encima (para poder leerlo); se reanuda al quitarlo
+// (solo con mouse: en el celular un toque no debe dejarlo pausado para siempre)
+vitrina.addEventListener('pointerenter', (ev) => { if (ev.pointerType !== 'mouse') return; vitrina.classList.add('pausada'); clearTimeout(temporizador); });
+vitrina.addEventListener('pointerleave', (ev) => {
+  if (ev.pointerType !== 'mouse') return;
+  vitrina.classList.remove('pausada');
+  pintarEjemplo(actual); // la barrita de este ticket vuelve a empezar
+  programar();
+});
+document.addEventListener('visibilitychange', () => { if (document.hidden) clearTimeout(temporizador); else programar(); });
+pintarEjemplo(0);
+programar();
+
+// ---------- Torres: a ciegas se cae; con Rendi se construye derecho ----------
+// Cubos isométricos dibujados en SVG. (x, y) = punta de arriba del cubo; w = ancho; h = alto de la cara.
+function cubo(x, y, w, h, [arriba, izq, der], estilo) {
+  const p = (...pts) => pts.map(([a, b]) => `${a.toFixed(1)},${b.toFixed(1)}`).join(' ');
+  return `<g class="cubo" style="${estilo}">`
+    + `<polygon points="${p([x - w / 2, y + w / 4], [x, y + w / 2], [x, y + w / 2 + h], [x - w / 2, y + w / 4 + h])}" fill="${izq}"/>`
+    + `<polygon points="${p([x, y + w / 2], [x + w / 2, y + w / 4], [x + w / 2, y + w / 4 + h], [x, y + w / 2 + h])}" fill="${der}"/>`
+    + `<polygon points="${p([x, y], [x + w / 2, y + w / 4], [x, y + w / 2], [x - w / 2, y + w / 4])}" fill="${arriba}"/></g>`;
+}
+const PISO = 290;
+
+// A ciegas: 7 cubos grises, cada uno más ladeado; al caer van a dar al piso, regados
+// llegaX/llegaY: dónde queda cada cubo (llegaY negativo = encima de otro); así parece derrumbe, no una fila acomodada
+const CIEGA = {
+  w: 56, h: 33, x: 200, ladeo: [0, 5, 12, 21, 32, 45, 60],
+  llegaX: [205, 150, 268, 330, 182, 92, 405], llegaY: [0, 4, 2, 6, -34, 8, 10], giro: [-6, -24, 17, 41, -13, 64, 88],
+};
+function dibujarCiega(svg) {
+  const { w, h, x } = CIEGA, y0 = PISO - w / 2 - h;
+  const cubos = CIEGA.ladeo.map((dx, i) => {
+    const xi = x + dx, yi = y0 - i * h;
+    const estilo = `--d:${i * 230}ms;--dc:${(6 - i) * 60}ms;--cx:${CIEGA.llegaX[i] - xi}px;--cy:${y0 - yi + CIEGA.llegaY[i]}px;--cr:${CIEGA.giro[i]}deg`;
+    return cubo(xi, yi, w, h, ['#e2e2dc', '#c4c5be', '#a9aaa3'], estilo);
+  }).join('');
+  svg.innerHTML = `<line class="piso" x1="20" y1="${PISO}" x2="460" y2="${PISO}"/>`
+    + `<g class="torre-ciega">${cubos}</g>`
+    + '<g class="pregunta"><text x="240" y="120" text-anchor="middle">¿Ganas o pierdes?</text></g>';
+}
+
+// Con Rendi: una torre por día; la del sábado (la más alta) en lima, con su etiqueta
+const SEMANA = { dias: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'], pisos: [2, 3, 3, 4, 5, 7, 3], mejor: 5, w: 44, h: 26 };
+function dibujarRendi(svg) {
+  const { w, h } = SEMANA, y0 = PISO - w / 2 - h;
+  let cubos = '', dias = '';
+  SEMANA.dias.forEach((dia, c) => {
+    const x = 60 + c * 60;
+    const colores = c === SEMANA.mejor ? ['#a3e66a', '#86cc4f', '#6db23c'] : ['#4f9a5f', '#2d6a3c', '#22542f'];
+    for (let n = 0; n < SEMANA.pisos[c]; n++) cubos += cubo(x, y0 - n * h, w, h, colores, `--d:${c * 120 + n * 140}ms`);
+    dias += `<text class="dia" x="${x}" y="${PISO + 26}">${dia}</text>`;
+  });
+  const xm = 60 + SEMANA.mejor * 60, ym = y0 - (SEMANA.pisos[SEMANA.mejor] - 1) * h - 44;
+  svg.innerHTML = `<line class="piso" x1="20" y1="${PISO + 4}" x2="460" y2="${PISO + 4}"/>${cubos}${dias}`
+    + `<g class="mejor"><rect x="${xm - 112}" y="${ym - 20}" width="224" height="30" rx="15" fill="#a3e66a"/>`
+    + `<text x="${xm}" y="${ym}" text-anchor="middle">Sáb $8,450 · tu mejor día</text></g>`;
+}
+
+const escenaCiega = document.getElementById('escena-ciega');
+const escenaRendi = document.getElementById('escena-rendi');
+dibujarCiega(escenaCiega.querySelector('svg'));
+dibujarRendi(escenaRendi.querySelector('svg'));
+let relojesTorres = [];
+function animarTorres() {
+  relojesTorres.forEach(clearTimeout);
+  relojesTorres = [];
+  for (const e of [escenaCiega, escenaRendi]) { e.classList.remove('arma', 'tambalea', 'cae', 'final'); void e.offsetWidth; }
+  if (sinMovimiento) { escenaCiega.classList.add('final'); escenaRendi.classList.add('final'); return; }
+  const despues = (ms, fn) => relojesTorres.push(setTimeout(fn, ms));
+  escenaCiega.classList.add('arma');
+  escenaRendi.classList.add('arma');
+  despues(2300, () => escenaRendi.classList.add('final'));   // la etiqueta del mejor día
+  despues(2000, () => escenaCiega.classList.add('tambalea'));
+  despues(3000, () => escenaCiega.classList.add('cae'));
+  despues(4100, () => escenaCiega.classList.add('final'));   // "¿Ganas o pierdes?"
+}
+// Se anima cuando el cliente llega a la sección (una vez); "Ver otra vez" la repite
+const vigia = new IntersectionObserver((entradas) => {
+  if (entradas.some((e) => e.isIntersecting)) { animarTorres(); vigia.disconnect(); }
+}, { threshold: 0.35 });
+vigia.observe(document.getElementById('torres'));
+document.getElementById('torres-otra-vez').addEventListener('click', animarTorres);
+document.getElementById('numero').textContent = CONFIG.whatsapp.replace(/(\d{3})(\d{3})(\d{4})/, '$1 $2 $3');
+</script>
+</body>
+</html>
