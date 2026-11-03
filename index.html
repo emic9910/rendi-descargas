@@ -125,6 +125,27 @@
   .funcion h3 { margin: 0 0 8px; font-size: 21px; font-weight: 700; color: var(--tinta); letter-spacing: -0.02em; }
   .funcion p { margin: 0; font-size: 16.5px; color: var(--texto); }
 
+  /* ---------- en tu celular ---------- */
+  .celular { padding-top: 0; }
+  .celular .rejilla { display: grid; grid-template-columns: 1.2fr .8fr; gap: 48px; align-items: center; }
+  .puntos.claros { border-top-color: var(--linea); }
+  .puntos.claros li { color: var(--tinta); border-bottom-color: var(--linea); }
+  .telefono { justify-self: center; width: 300px; max-width: 100%; background: var(--tinta); border-radius: 44px; padding: 12px; box-shadow: 0 30px 60px -30px rgba(14, 17, 15, .45); }
+  .telefono .pantalla { background: var(--lienzo); border-radius: 34px; overflow: hidden; padding-bottom: 14px; }
+  .tel-arriba { background: var(--bosque); color: var(--papel); padding: 26px 18px 14px; }
+  .tel-arriba b { display: block; font-size: 17px; }
+  .tel-arriba span { font-size: 12px; opacity: .8; }
+  .tel-tarjeta { background: var(--papel); border-radius: 16px; margin: 10px 10px 0; padding: 12px 14px; }
+  .tel-tarjeta small { font: 700 11px/1 var(--display); text-transform: uppercase; letter-spacing: .06em; color: var(--gris); }
+  .tel-grande { font-size: 30px; font-weight: 900; letter-spacing: -0.03em; color: var(--tinta); margin-top: 6px; }
+  .tel-gris { font-size: 13px; color: var(--gris); }
+  .tel-sube { font-size: 13px; font-weight: 700; color: #1f7a35; }
+  .tel-barras { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; align-items: end; height: 64px; margin-top: 10px; }
+  .tel-barras i { display: block; background: var(--bosque); border-radius: 4px 4px 1px 1px; }
+  .tel-barras i.hoy { background: var(--lima); }
+  .tel-renglon { display: flex; justify-content: space-between; gap: 8px; font-size: 14px; padding-top: 8px; color: var(--tinta); }
+  .tel-renglon b { color: #b3261e; }
+
   /* ---------- torres de cubos ---------- */
   .torres { padding-top: 0; }
   .escenas { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -228,7 +249,7 @@
   @media (max-width: 900px) {
     .menu { display: none; }
     .portada { padding: 24px 0 56px; }
-    .portada .contenedor, .domo .rejilla, .preguntas, .windows, .escenas { grid-template-columns: 1fr; }
+    .portada .contenedor, .domo .rejilla, .celular .rejilla, .preguntas, .windows, .escenas { grid-template-columns: 1fr; }
     .funciones { grid-template-columns: 1fr; }
     .pasos { grid-template-columns: 1fr; }
     .paso, .paso + .paso { padding: 28px 0; border-left: 0; }
@@ -256,6 +277,7 @@
     <a class="marca" href="#" aria-label="Rendi, inicio">rendi<b></b></a>
     <nav class="menu" aria-label="Secciones">
       <a href="#que-hace">Qué hace</a>
+      <a href="#celular">En tu celular</a>
       <a href="#empezar">Cómo empezar</a>
       <a href="#asesoria">Asesoría</a>
       <a href="#preguntas">Preguntas</a>
@@ -347,6 +369,48 @@
           <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.5 3.2 8.3 7.5 9.5 4.3-1.2 7.5-5 7.5-9.5V6z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg></div>
           <h3>Tus datos son tuyos</h3>
           <p>Se guardan en tu computadora, con copia de seguridad automática cada día. Descárgalos en Excel cuando quieras.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rendi en el celular (0.7.0, 2 nov 2026): el dueño ve su tienda desde el celular. La página del celular vive en el servidor
+       de licencias (/celular); la dirección completa va en CONFIG.celular. -->
+  <section class="celular" id="celular">
+    <div class="contenedor rejilla">
+      <div>
+        <span class="etiqueta"><i></i>Nuevo · Incluido en tu mensualidad</span>
+        <h2 class="display" style="margin-top:22px">Tu tienda<br>en tu<br>celular.</h2>
+        <p class="bajada">¿Saliste a surtir o estás en casa? Desde tu celular ves cómo va tu negocio, estés donde estés.</p>
+        <ul class="puntos claros">
+          <li>Cuánto se ha vendido hoy, en la semana y en el mes, y cuánto le ganas.</li>
+          <li>Tu inventario: qué tienes y qué se está acabando.</li>
+          <li>Las mermas: lo que se echó a perder, se rompió o caducó.</li>
+        </ul>
+        <p class="letra-chica">Se activa en un minuto: en Rendi das "Conectar un celular" y escribes el código en tu celular. Solo consulta: desde el celular no se vende ni se cambia nada.</p>
+        <div class="acciones" style="margin-top:22px">
+          <a class="boton bosque" data-whatsapp="celular" href="#">Actívalo con nuestra ayuda</a>
+          <a class="enlace" data-celular href="#">Ya lo tengo: entrar</a>
+        </div>
+      </div>
+      <div class="telefono" aria-hidden="true">
+        <div class="pantalla">
+          <div class="tel-arriba"><b>Abarrotes Lupe</b><span>Actualizado hace 4 minutos</span></div>
+          <div class="tel-tarjeta">
+            <small>Hoy</small>
+            <div class="tel-grande">$3,480.00</div>
+            <div class="tel-gris">46 ventas · ganancia $812.00</div>
+            <div class="tel-sube">▲ 12% vs ayer</div>
+          </div>
+          <div class="tel-tarjeta">
+            <small>Esta semana</small>
+            <div class="tel-barras"><i style="height:45%"></i><i style="height:60%"></i><i style="height:52%"></i><i style="height:70%"></i><i style="height:84%"></i><i class="hoy" style="height:100%"></i><i style="height:8%"></i></div>
+          </div>
+          <div class="tel-tarjeta">
+            <small>Por resurtir</small>
+            <div class="tel-renglon"><span>Frijol negro 1 kg</span><b>4 pza</b></div>
+            <div class="tel-renglon"><span>Aceite vegetal 1 L</span><b>2 pza</b></div>
+          </div>
         </div>
       </div>
     </div>
@@ -465,7 +529,8 @@
       <div class="lista-preguntas">
         <details><summary>¿Necesito internet?</summary><p>Solo para activarlo la primera vez. Después vende aunque se vaya el internet. Cuando vuelve, se conecta solo para revisar tu licencia.</p></details>
         <details><summary>¿En qué computadora funciona?</summary><p>En computadoras con Windows 10 u 11. Puedes cobrar con lector de código de barras e imprimir tus tickets.</p></details>
-        <details><summary>¿Dónde quedan mis datos?</summary><p>En tu propia computadora. Rendi saca una copia de seguridad cada día y puedes guardarla en una USB o descargar tus ventas en Excel cuando quieras.</p></details>
+        <details><summary>¿Dónde quedan mis datos?</summary><p>En tu propia computadora. Rendi saca una copia de seguridad cada día y puedes guardarla en una USB o descargar tus ventas en Excel cuando quieras. Si conectas tu celular, un resumen de tus ventas, inventario y mermas se guarda en nuestro servidor para que lo puedas ver; lo apagas cuando quieras y se borra. Más detalle en el <a class="enlace" data-privacidad href="#">aviso de privacidad</a>.</p></details>
+        <details><summary>¿Cómo veo mi tienda en el celular?</summary><p>En Rendi ve a ⚙️ → "Ver mi tienda en el celular" → "Conectar un celular". Te sale un código; en tu celular abre la página que te indica, escríbelo y listo. Puedes ponerlo como ícono en tu pantalla de inicio. Viene incluido en tu mensualidad y, si quieres, te ayudamos por WhatsApp.</p></details>
         <details><summary>¿Puedo tener varios cajeros?</summary><p>Sí. Cada uno entra con su PIN. Al cerrar la caja, el cajero cuenta el dinero sin ver cuánto debería haber, y tú ves si sobró o faltó.</p></details>
         <details><summary>¿Qué pasa al terminar los 30 días?</summary><p>Si te gustó, contratas tu mensualidad por WhatsApp y sigues usándolo con todos tus datos. Tus datos son tuyos: siempre los puedes descargar.</p></details>
         <details><summary>¿Y si cambio de computadora?</summary><p>Instalas Rendi en la nueva, pasas tu copia de seguridad y escribes el mismo código. No pierdes nada.</p></details>
@@ -485,7 +550,7 @@
     </div>
     <div class="gigante" aria-hidden="true">rendi</div>
     <div class="pie-final">
-      <span>© <span id="anio"></span> Rendi · Punto de venta para negocios de México</span>
+      <span>© <span id="anio"></span> Rendi · Punto de venta para negocios de México · <a data-privacidad href="#">Aviso de privacidad</a></span>
       <a data-whatsapp="info" href="#">WhatsApp <span id="numero"></span></a>
     </div>
   </div>
@@ -499,12 +564,16 @@ const CONFIG = {
   // "latest/download/Rendi-Instalador.exe" siempre da la versión más nueva: el enlace no cambia al subir otra.
   descarga: 'https://github.com/emic9910/rendi-descargas/releases/latest/download/Rendi-Instalador.exe',
   whatsapp: '7352355970',
+  // Rendi en el celular y el aviso de privacidad viven en el servidor de licencias (la página también está en GitHub Pages)
+  celular: 'https://rendi-licencias.onrender.com/celular',
+  privacidad: 'https://rendi-licencias.onrender.com/privacidad',
 };
 const MENSAJES = {
   info: 'Hola, quiero información de Rendi, el punto de venta.',
   codigo: 'Hola, quiero probar Rendi 30 días gratis. Mi negocio se llama: ',
   precio: 'Hola, quiero saber el precio de Rendi para mi negocio. Es un/una: ',
   descarga: 'Hola, quiero descargar Rendi. ¿Me pasas el enlace?',
+  celular: 'Hola, ya uso Rendi y quiero ver mi tienda en el celular. ¿Me ayudas a activarlo?',
 };
 const enlaceWhatsApp = (tipo) => `https://wa.me/52${CONFIG.whatsapp}?text=${encodeURIComponent(MENSAJES[tipo] ?? MENSAJES.info)}`;
 const nuevaPestana = (a) => { a.target = '_blank'; a.rel = 'noopener'; };
@@ -514,6 +583,8 @@ document.querySelectorAll('[data-descarga]').forEach((a) => {
   a.href = enlaceWhatsApp('descarga');
   nuevaPestana(a);
 });
+document.querySelectorAll('[data-celular]').forEach((a) => { a.href = CONFIG.celular; nuevaPestana(a); });
+document.querySelectorAll('[data-privacidad]').forEach((a) => { a.href = CONFIG.privacidad; });
 document.getElementById('anio').textContent = new Date().getFullYear();
 
 // ---------- El ticket de la portada va cambiando de giro ----------
